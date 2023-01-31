@@ -67,6 +67,7 @@ const gameApp = {
         setInterval(() => {
             this.heroe.shoot()
         }, 1000)
+
     },
 
     createHeroe() {
@@ -76,7 +77,7 @@ const gameApp = {
 
 
     generateEnemies() {
-        if (this.framesCounter % 70 === 0) {
+        if (this.framesCounter % 50 === 0) {
             this.enemies.push(new enemies(this.ctx, this.canvasSize))
 
         }

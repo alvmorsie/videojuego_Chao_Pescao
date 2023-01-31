@@ -4,7 +4,7 @@ class enemies {
         this.canvasSize = canvasSize;
         this.position = {
             x: window.innerWidth,
-            y: Math.floor(Math.random() * (window.innerHeight - 250 - 250) + 200),
+            y: Math.floor(Math.random() * (window.innerHeight - 150 - 150) + 150),
         }
         this.size = {
             w: 100,

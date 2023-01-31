@@ -4,7 +4,7 @@ class heroe {
         this.canvasSize = canvasSize
 
 
-        this.position = { x: 100, y: 500 }
+        this.position = { x: 100, y: this.canvasSize.h / 2 }
         this.size = { w: 60, h: 80 }
 
         this.heroeVel = { x: 0, y: 2.5 }
@@ -26,7 +26,7 @@ class heroe {
     setEventListeners() {
         document.onkeyup = e => {
             if (e.key === ' ') {
-                this.position.y -= 50
+                this.position.y -= 60
             }
             // if (e.key === 'ArrowRight') {
             //     this.shoot()
