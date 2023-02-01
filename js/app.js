@@ -13,6 +13,7 @@ const gameApp = {
     framesCounter: 0,
     score: 0,
     interval: undefined,
+    coolDown: 100,
 
 
 
@@ -50,11 +51,15 @@ const gameApp = {
         this.reset()
         this.interval = setInterval(() => {
             this.framesCounter > 5000 ? this.framesCounter = 0 : this.framesCounter++
+            if (this.framesCounter % this.coolDown === 0) this.heroe.canShoot = true
             this.clearAll()
             this.drawAll()
             this.heroe.moveHeroe()
             this.enemies.forEach(enemy => enemy.move())
             this.heroe.setEventListeners()
+            if (this.heroe.canMoveUp) { this.heroe.position.y -= 10 }
+            if (this.heroe.canMoveRight) { this.heroe.position.x += 10 }
+            if (this.heroe.canMoveLeft) { this.heroe.position.x -= 10 }
             this.generateEnemies()
             this.clearEnemies()
             this.collisionWithEnemies()
@@ -64,9 +69,7 @@ const gameApp = {
             this.drawScore()
 
         }, 10)
-        setInterval(() => {
-            this.heroe.shoot()
-        }, 1000)
+
 
     },
 
@@ -155,10 +158,6 @@ const gameApp = {
         this.ctx.font = "50px serif"
         this.ctx.fillStyle = "white"
         this.ctx.fillText("Score: " + this.score, 200, 100)
-
-        // setInterval(() => {
-        //     this.score++
-        // }, 0)
 
     },
     gameOver() {
