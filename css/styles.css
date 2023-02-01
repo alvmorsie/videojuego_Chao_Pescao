@@ -1,5 +1,18 @@
 body {
     padding: 0;
     margin: 0;
-    background-color: blue;
+    background-image: url(../img/ocean2.jpg);
+}
+
+#MyGame {
+    display: none;
+}
+
+.start-button {
+    background-image: url(../img/start.png);
+    display: flex;
+    position: absolute;
+    margin: auto;
+
+
 }

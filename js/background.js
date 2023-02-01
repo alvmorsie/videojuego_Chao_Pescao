@@ -8,9 +8,11 @@ class background {
         this.skySize = { w: window.innerWidth, h: 100 };
         this.skyPosition = { x: 0, y: 0 };
         this.oceanInstance = new Image();
-        this.oceanInstance.src = './img/ocean.jpg';
+        this.oceanInstance.src = './img/ocean3.png';
         this.oceanPosition = { x: 0, y: 0 };
         this.oceanSize = { w: window.innerWidth, h: window.innerHeight };
+        this.oceanVel = { x: 2, y: 0 }
+
 
     }
     drawFloor() {
@@ -29,6 +31,14 @@ class background {
     }
     drawBackground() {
         this.ctx.drawImage(this.oceanInstance, this.oceanPosition.x, this.oceanPosition.y, this.oceanSize.w, this.oceanSize.h)
+        this.ctx.drawImage(this.oceanInstance, this.oceanPosition.x + this.oceanSize.w, this.oceanPosition.y, this.oceanSize.w, this.oceanSize.h)
+        this.moveBackground()
+    }
+    moveBackground() {
+        if (this.oceanPosition.x <= -this.oceanSize.w) {
+            this.oceanPosition.x = 0
+        }
+        this.oceanPosition.x -= this.oceanVel.x
     }
 
 

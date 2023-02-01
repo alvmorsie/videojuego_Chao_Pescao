@@ -11,11 +11,11 @@ class Bullet {
         this.heroeSizeH = heroeSizeH
 
         this.size = {
-            w: 10,
-            h: 5,
+            w: 25,
+            h: 25,
         }
-        //this.bulletsInstance = new Image()
-        // this.bulletsInstance.src = './img/bala.png'
+        this.bulletsInstance = new Image()
+        this.bulletsInstance.src = './img/Bubble.png'
         this.Vel = { x: 5, y: 0 }
         this.init()
     }
@@ -24,10 +24,10 @@ class Bullet {
     }
 
     draw() {
-        //this.ctx.drawImage(this.bulletsInstance, this.bulletsPos.x, this.bulletsPos.y, this.size.w, this.size.h)
+        this.ctx.drawImage(this.bulletsInstance, this.bulletsPos.x, this.bulletsPos.y, this.size.w, this.size.h)
 
-        this.ctx.fillStyle = 'red'
-        this.ctx.fillRect(this.bulletsPos.x, this.bulletsPos.y, this.size.w, this.size.h)
+        // this.ctx.fillStyle = 'red'
+        // this.ctx.fillRect(this.bulletsPos.x, this.bulletsPos.y, this.size.w, this.size.h)
         this.move()
     }
     move() {
