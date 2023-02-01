@@ -5,6 +5,17 @@ body {
 
 }
 
+h1 {
+    background-image: url(../img/logo.png);
+    background-size: contain;
+    margin-bottom: 100px;
+    position: absolute;
+    width: 500px;
+    height: 400px;
+
+
+}
+
 #MyGame {
     display: none;
 }
