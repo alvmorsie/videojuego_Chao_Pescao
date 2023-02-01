@@ -14,6 +14,7 @@ const gameApp = {
     score: 0,
     interval: undefined,
     coolDown: 100,
+    item1: [],
 
 
 
@@ -62,13 +63,17 @@ const gameApp = {
             if (this.heroe.canMoveLeft) { this.heroe.position.x -= 10 }
             this.generateEnemies()
             this.clearEnemies()
+            // this.clearItem1()
             this.collisionWithEnemies()
             this.collisionWithSky()
             this.collisionWithFloor()
             this.collisionBulletsWithEnemies()
             this.drawScore()
-
         }, 10)
+        // this.interval = setInterval(() => {
+        //     this.generateItem1()
+        //     this.item1.forEach(item1 => item1.draw())
+        // }, 1000)
 
 
     },
@@ -85,6 +90,15 @@ const gameApp = {
 
         }
     },
+    // generateItem1() {
+    //     if (this.framesCounter % 50 === 0) {
+    //         this.item1.push(new item1(this.ctx, this.canvasSize))
+
+    //     }
+    // },
+    // clearItem1() {
+    //     this.item1 = this.item1.filter(item1 => item1.position.x >= 0)
+    // },
     clearEnemies() {
         this.enemies = this.enemies.filter(enemy => enemy.position.x >= 0)
     },
@@ -104,6 +118,7 @@ const gameApp = {
         this.background.drawAllBackground()
         this.heroe.drawHeroe()
         this.enemies.forEach(enemy => enemy.draw())
+
 
 
 
@@ -157,7 +172,7 @@ const gameApp = {
     drawScore() {
         this.ctx.font = "50px serif"
         this.ctx.fillStyle = "white"
-        this.ctx.fillText("Score: " + this.score, 200, 100)
+        this.ctx.fillText("Score: " + this.score, 200, 90)
 
     },
     gameOver() {

@@ -8,10 +8,12 @@ body {
 h1 {
     background-image: url(../img/logo.png);
     background-size: contain;
+    flex-direction: column;
     margin-bottom: 100px;
-    position: absolute;
+    /* position: absolute; */
     width: 500px;
     height: 400px;
+    z-index: 1;
 
 
 }
@@ -23,16 +25,17 @@ h1 {
 .start-button {
     background-image: url(../img/start.png);
     background-size: cover;
-    /* display: flex; */
-    /* position: absolute;
-    margin: auto; */
+    /* position: absolute; */
+    flex-direction: column;
     width: 300px;
     height: 120px;
+    z-index: 2;
 }
 
 .main-div {
     display: flex;
     justify-content: center;
+    flex-direction: column;
     align-items: center;
     width: 1900px;
     height: 930px;
