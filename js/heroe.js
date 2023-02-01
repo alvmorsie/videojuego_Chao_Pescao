@@ -33,6 +33,7 @@ class heroe {
 
     setEventListeners() {
         document.onkeydown = e => {
+            e.preventDefault()
             if (e.code === 'ArrowUp') {
                 this.canMoveUp = true
             }
@@ -43,7 +44,7 @@ class heroe {
                 this.canMoveLeft = true
             }
 
-            if (e.code === 'Space') {
+            if (e.code === 'KeyA') {
                 if (this.canShoot) {
                     this.shoot()
                 }
