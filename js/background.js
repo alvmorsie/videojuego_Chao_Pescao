@@ -1,4 +1,4 @@
-class background {
+class Background {
     constructor(ctx, canvasSize) {
         this.ctx = ctx;
         this.canvasSize = canvasSize;

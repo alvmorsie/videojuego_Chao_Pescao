@@ -1,4 +1,4 @@
-class Enemy {
+class Medusa {
     constructor(ctx, canvasSize) {
         this.ctx = ctx;
         this.canvasSize = canvasSize;
@@ -7,19 +7,17 @@ class Enemy {
             y: Math.floor(Math.random() * (window.innerHeight - 300) + 150),
         }
         this.size = {
-            w: 100,
-            h: 80,
+            w: 90,
+            h: 90,
         }
-
-        this.enemiesInstance = new Image()
-        this.enemiesInstance.src = './img/shark.png'
-        this.Vel = { x: 5, y: 0 }
+        this.medusaInstance = new Image()
+        this.medusaInstance.src = './img/pulpo.png'
+        this.Vel = { x: 2.5, y: 0 }
     }
     draw() {
-        this.ctx.drawImage(this.enemiesInstance, this.position.x, this.position.y, this.size.w, this.size.h)
+        this.ctx.drawImage(this.medusaInstance, this.position.x, this.position.y, this.size.w, this.size.h)
     }
     move() {
         this.position.x -= this.Vel.x
     }
-
 }

@@ -1,4 +1,4 @@
-class heroe {
+class Heroe {
     constructor(ctx, canvasSize) {
         this.ctx = ctx
         this.canvasSize = canvasSize
@@ -16,6 +16,7 @@ class heroe {
         this.canMoveRight = false
         this.canMoveLeft = false
         this.canMoveDown = false
+        this.soundBullets = new Audio('./sound/disparo.mp3')
 
 
 
@@ -44,9 +45,10 @@ class heroe {
                 this.canMoveLeft = true
             }
 
-            if (e.code === 'KeyA') {
+            if (e.code === 'Space') {
                 if (this.canShoot) {
                     this.shoot()
+                    this.soundBullets.play()
                 }
             }
         }

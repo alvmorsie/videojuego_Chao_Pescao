@@ -14,9 +14,7 @@ const gameApp = {
     score: 0,
     interval: undefined,
     coolDown: 100,
-    item1: [],
-
-
+    medusas: [],
 
 
 
@@ -24,9 +22,6 @@ const gameApp = {
         this.setContext()
         this.setDimensions()
         this.start()
-
-
-
 
     },
     setContext() {
@@ -45,8 +40,6 @@ const gameApp = {
 
     start() {
         this.createHeroe()
-        this.generateEnemies()
-
 
 
         this.reset()
@@ -56,6 +49,7 @@ const gameApp = {
             this.clearAll()
             this.drawAll()
             this.heroe.moveHeroe()
+            this.medusas.forEach(medusas => medusas.move())
             this.enemies.forEach(enemy => enemy.move())
             this.heroe.setEventListeners()
             if (this.heroe.canMoveUp) { this.heroe.position.y -= 10 }
@@ -63,49 +57,43 @@ const gameApp = {
             if (this.heroe.canMoveLeft) { this.heroe.position.x -= 10 }
             this.generateEnemies()
             this.clearEnemies()
-            // this.clearItem1()
             this.collisionWithEnemies()
             this.collisionWithSky()
             this.collisionWithFloor()
             this.collisionBulletsWithEnemies()
             this.drawScore()
+            this.generateMedusas()
+            this.collisionWithMedusas()
         }, 10)
-        // this.interval = setInterval(() => {
-        //     this.generateItem1()
-        //     this.item1.forEach(item1 => item1.draw())
-        // }, 1000)
 
 
     },
 
     createHeroe() {
-        this.heroe = new heroe(this.ctx, this.canvasSize)
+        this.heroe = new Heroe(this.ctx, this.canvasSize)
     },
 
 
 
     generateEnemies() {
         if (this.framesCounter % 50 === 0) {
-            this.enemies.push(new enemies(this.ctx, this.canvasSize))
+            this.enemies.push(new Enemy(this.ctx, this.canvasSize))
 
         }
     },
-    // generateItem1() {
-    //     if (this.framesCounter % 50 === 0) {
-    //         this.item1.push(new item1(this.ctx, this.canvasSize))
+    generateMedusas() {
+        if (this.framesCounter % 300 === 0) {
+            this.medusas.push(new Medusa(this.ctx, this.canvasSize))
+        }
+    },
 
-    //     }
-    // },
-    // clearItem1() {
-    //     this.item1 = this.item1.filter(item1 => item1.position.x >= 0)
-    // },
     clearEnemies() {
-        this.enemies = this.enemies.filter(enemy => enemy.position.x >= 0)
+        this.enemies = this.enemies.filter(Enemy => Enemy.position.x >= 0)
     },
 
 
     reset() {
-        this.background = new background(this.ctx, this.canvasSize)
+        this.background = new Background(this.ctx, this.canvasSize)
     },
 
     clearAll() {
@@ -118,10 +106,7 @@ const gameApp = {
         this.background.drawAllBackground()
         this.heroe.drawHeroe()
         this.enemies.forEach(enemy => enemy.draw())
-
-
-
-
+        this.medusas.forEach(medusa => medusa.draw())
 
     },
 
@@ -132,6 +117,17 @@ const gameApp = {
                 this.heroe.position.x + this.heroe.size.w > enemy.position.x &&
                 this.heroe.position.y < enemy.position.y + enemy.size.h &&
                 this.heroe.size.h + this.heroe.position.y > enemy.position.y) {
+                this.gameOver()
+
+            }
+        })
+    },
+    collisionWithMedusas() {
+        this.medusas.forEach(medusa => {
+            if (this.heroe.position.x < medusa.position.x + medusa.size.w &&
+                this.heroe.position.x + this.heroe.size.w > medusa.position.x &&
+                this.heroe.position.y < medusa.position.y + medusa.size.h &&
+                this.heroe.size.h + this.heroe.position.y > medusa.position.y) {
                 this.gameOver()
 
             }
