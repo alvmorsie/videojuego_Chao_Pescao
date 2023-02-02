@@ -7,8 +7,8 @@ class Enemy {
             y: Math.floor(Math.random() * (window.innerHeight - 300) + 150),
         }
         this.size = {
-            w: 100,
-            h: 80,
+            w: 80,
+            h: 100,
         }
 
         this.enemiesInstance = new Image()

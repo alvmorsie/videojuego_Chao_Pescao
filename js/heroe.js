@@ -5,7 +5,7 @@ class Heroe {
 
 
         this.position = { x: 100, y: this.canvasSize.h / 2 }
-        this.size = { w: 60, h: 80 }
+        this.size = { w: 80, h: 60 }
 
         this.heroeVel = { x: 0, y: 2 }
         this.heroeInstance = undefined
@@ -26,7 +26,7 @@ class Heroe {
 
     drawHeroe() {
         this.heroeInstance = new Image()
-        this.heroeInstance.src = './img/fish.png'
+        this.heroeInstance.src = './img/nemo.png'
         this.ctx.drawImage(this.heroeInstance, this.position.x, this.position.y, this.size.w, this.size.h)
         this.bullets.forEach(bullets => bullets.draw())
         this.clearBullets()

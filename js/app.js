@@ -12,9 +12,12 @@ const gameApp = {
     enemies: [],
     framesCounter: 0,
     score: 0,
+    lives: 3,
     interval: undefined,
     coolDown: 100,
     medusas: [],
+    musicGameover: new Audio('./sound/gameover.mp3'),
+    musicLive: new Audio('./sound/muerte.mp3'),
 
 
 
@@ -22,7 +25,6 @@ const gameApp = {
         this.setContext()
         this.setDimensions()
         this.start()
-
     },
     setContext() {
         this.canvasTag = document.querySelector('canvas')
@@ -35,13 +37,9 @@ const gameApp = {
         }
         this.canvasTag.setAttribute('width', this.canvasSize.w)
         this.canvasTag.setAttribute('height', this.canvasSize.h)
-
     },
-
     start() {
         this.createHeroe()
-
-
         this.reset()
         this.interval = setInterval(() => {
             this.framesCounter > 5000 ? this.framesCounter = 0 : this.framesCounter++
@@ -62,23 +60,18 @@ const gameApp = {
             this.collisionWithFloor()
             this.collisionBulletsWithEnemies()
             this.drawScore()
+            this.drawlives()
             this.generateMedusas()
             this.collisionWithMedusas()
+            if (this.lives === 0) { this.gameOver() }
         }, 10)
-
-
     },
-
     createHeroe() {
         this.heroe = new Heroe(this.ctx, this.canvasSize)
     },
-
-
-
     generateEnemies() {
         if (this.framesCounter % 50 === 0) {
             this.enemies.push(new Enemy(this.ctx, this.canvasSize))
-
         }
     },
     generateMedusas() {
@@ -86,38 +79,31 @@ const gameApp = {
             this.medusas.push(new Medusa(this.ctx, this.canvasSize))
         }
     },
-
     clearEnemies() {
         this.enemies = this.enemies.filter(Enemy => Enemy.position.x >= 0)
     },
-
-
     reset() {
         this.background = new Background(this.ctx, this.canvasSize)
     },
-
     clearAll() {
         this.ctx.clearRect(0, 0, this.canvasSize.w, this.canvasSize.h)
-
-
     },
-
     drawAll() {
         this.background.drawAllBackground()
         this.heroe.drawHeroe()
         this.enemies.forEach(enemy => enemy.draw())
         this.medusas.forEach(medusa => medusa.draw())
-
     },
-
-
     collisionWithEnemies() {
         this.enemies.forEach(enemy => {
             if (this.heroe.position.x < enemy.position.x + enemy.size.w &&
                 this.heroe.position.x + this.heroe.size.w > enemy.position.x &&
                 this.heroe.position.y < enemy.position.y + enemy.size.h &&
                 this.heroe.size.h + this.heroe.position.y > enemy.position.y) {
-                this.gameOver()
+                this.lives--
+                this.musicLive.play()
+                let enemyCollision = this.enemies.indexOf(enemy)
+                this.enemies.splice(enemyCollision, 1)
 
             }
         })
@@ -128,8 +114,10 @@ const gameApp = {
                 this.heroe.position.x + this.heroe.size.w > medusa.position.x &&
                 this.heroe.position.y < medusa.position.y + medusa.size.h &&
                 this.heroe.size.h + this.heroe.position.y > medusa.position.y) {
-                this.gameOver()
-
+                this.lives--
+                this.musicLive.play()
+                let medusaCollision = this.medusas.indexOf(medusa)
+                this.medusas.splice(medusaCollision, 1)
             }
         })
     },
@@ -137,16 +125,18 @@ const gameApp = {
         if (this.heroe.position.x < this.background.skyPosition.x + this.background.skySize.w &&
             this.heroe.position.x + this.heroe.size.w > this.background.skyPosition.x &&
             this.heroe.position.y < this.background.skyPosition.y + this.background.skySize.h &&
-            this.heroe.size.h + this.heroe.position.y > this.background.skyPosition.y) { this.gameOver() }
+            this.heroe.size.h + this.heroe.position.y > this.background.skyPosition.y) {
+            this.gameOver()
+        }
     },
-
     collisionWithFloor() {
         if (this.heroe.position.x < this.background.floorPosition.x + this.background.floorSize.w &&
             this.heroe.position.x + this.heroe.size.w > this.background.floorPosition.x &&
             this.heroe.position.y < this.background.floorPosition.y + this.background.floorSize.h &&
-            this.heroe.size.h + this.heroe.position.y > this.background.floorPosition.y) { this.gameOver() }
+            this.heroe.size.h + this.heroe.position.y > this.background.floorPosition.y) {
+            this.gameOver()
+        }
     },
-
     collisionBulletsWithEnemies() {
         this.heroe.bullets.forEach(bullet => {
             this.enemies.forEach(enemy => {
@@ -159,17 +149,22 @@ const gameApp = {
                     this.heroe.bullets.splice(bulletCollision, 1)
                     this.enemies.splice(enemyCollision, 1)
                     this.score++
-
+                    if (this.score % 20 === 0) {
+                        this.lives++
+                    }
                 }
             })
         })
     },
-
     drawScore() {
         this.ctx.font = "50px serif"
         this.ctx.fillStyle = "white"
         this.ctx.fillText("Score: " + this.score, 200, 90)
-
+    },
+    drawlives() {
+        this.ctx.font = "50px serif"
+        this.ctx.fillStyle = "white"
+        this.ctx.fillText("Lives: " + this.lives, 200, 50)
     },
     gameOver() {
         this.ctx.font = "100px serif"
@@ -177,16 +172,14 @@ const gameApp = {
         this.ctx.fillText("¡GAME OVER!", this.canvasSize.w / 3, (this.canvasSize.h / 2) - 50)
         this.ctx.font = "100px serif"
         this.ctx.fillStyle = "white"
-        this.ctx.fillText('SCORE: ' + this.score, (this.canvasSize.w / 3) + 100, (this.canvasSize.h / 2) + 50)
-
+        this.ctx.fillText('SCORE: ' + this.score, (this.canvasSize.w / 3) + 100, (this.canvasSize.h / 2) + 40)
+        this.musicGameover.play()
         clearInterval(this.interval)
         setTimeout(() => {
             location.reload()
         }
-            , 1000)
+            , 3000)
     },
-
-
 }
 
 
