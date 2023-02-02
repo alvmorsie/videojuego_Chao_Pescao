@@ -1,11 +1,11 @@
 window.onload = () => {
-    musicIntro = new Audio('./sound/intro.mp3')
+    // musicIntro = new Audio('./sound/intro.mp3')
 
 
     document.querySelector('.start-button').onclick = () => {
         document.querySelector(".start-button").style.display = "none"
         document.querySelector("#MyGame").style.display = "block"
-        musicIntro.play()
+        // musicIntro.play()
         gameApp.init()
     }
 

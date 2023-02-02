@@ -17,10 +17,13 @@ const gameApp = {
     coolDown: 100,
     medusas: [],
     musicLive: new Audio('./sound/dead.mp3'),
+    musicIntro: new Audio('./sound/intro.mp3'),
+    musicGameOver: new Audio('./sound/gameover.mp3'),
 
 
 
     init() {
+        this.musicIntro.play()
         this.setContext()
         this.setDimensions()
         this.start()
@@ -62,6 +65,7 @@ const gameApp = {
             this.drawlives()
             this.generateMedusas()
             this.collisionWithMedusas()
+            this.collisionBulletsWithMedusa()
             if (this.lives === 0) { this.gameOver() }
         }, 10)
     },
@@ -155,6 +159,20 @@ const gameApp = {
             })
         })
     },
+    collisionBulletsWithMedusa() {
+        this.heroe.bullets.forEach(bullet => {
+            this.medusas.forEach(medusa => {
+                if (bullet.bulletsPos.x < medusa.position.x + medusa.size.w &&
+                    bullet.bulletsPos.x + bullet.size.w > medusa.position.x &&
+                    bullet.bulletsPos.y < medusa.position.y + medusa.size.h &&
+                    bullet.size.h + bullet.bulletsPos.y > medusa.position.y) {
+                    let bulletCollision = this.heroe.bullets.indexOf(bullet)
+                    this.heroe.bullets.splice(bulletCollision, 1)
+
+                }
+            })
+        })
+    },
     drawScore() {
         this.ctx.font = "50px serif"
         this.ctx.fillStyle = "white"
@@ -172,11 +190,13 @@ const gameApp = {
         this.ctx.font = "100px serif"
         this.ctx.fillStyle = "white"
         this.ctx.fillText('SCORE: ' + this.score, (this.canvasSize.w / 3) + 100, (this.canvasSize.h / 2) + 40)
+        this.musicIntro.pause()
+        this.musicGameOver.play()
         clearInterval(this.interval)
         setTimeout(() => {
             location.reload()
         }
-            , 3000)
+            , 5000)
     },
 }
 
