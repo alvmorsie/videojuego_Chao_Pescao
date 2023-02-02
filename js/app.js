@@ -16,8 +16,7 @@ const gameApp = {
     interval: undefined,
     coolDown: 100,
     medusas: [],
-    musicGameover: new Audio('./sound/gameover.mp3'),
-    musicLive: new Audio('./sound/muerte.mp3'),
+    musicLive: new Audio('./sound/dead.mp3'),
 
 
 
@@ -173,7 +172,6 @@ const gameApp = {
         this.ctx.font = "100px serif"
         this.ctx.fillStyle = "white"
         this.ctx.fillText('SCORE: ' + this.score, (this.canvasSize.w / 3) + 100, (this.canvasSize.h / 2) + 40)
-        this.musicGameover.play()
         clearInterval(this.interval)
         setTimeout(() => {
             location.reload()

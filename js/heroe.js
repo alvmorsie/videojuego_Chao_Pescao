@@ -16,7 +16,7 @@ class Heroe {
         this.canMoveRight = false
         this.canMoveLeft = false
         this.canMoveDown = false
-        this.soundBullets = new Audio('./sound/disparo.mp3')
+        this.soundBullets = new Audio('./sound/burbuja.mp3')
 
 
 

@@ -16,12 +16,16 @@ class Background {
 
     }
     drawFloor() {
-        this.ctx.fillStyle = 'black'
-        this.ctx.fillRect(this.floorPosition.x, this.floorPosition.y, this.floorSize.w, this.floorSize.h)
+        this.floorInstance = new Image()
+        this.floorInstance.src = './img/floor.png'
+        this.ctx.drawImage(this.floorInstance, this.floorPosition.x, this.floorPosition.y, this.floorSize.w, this.floorSize.h)
+
     }
     drawSky() {
-        this.ctx.fillStyle = 'black'
-        this.ctx.fillRect(this.skyPosition.x, this.skyPosition.y, this.skySize.w, this.skySize.h)
+        this.skyInstance = new Image()
+        this.skyInstance.src = './img/sky.png'
+        this.ctx.drawImage(this.skyInstance, this.skyPosition.x, this.skyPosition.y, this.skySize.w, this.skySize.h)
+
     }
     drawAllBackground() {
         this.drawBackground()
