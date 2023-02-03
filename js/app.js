@@ -15,7 +15,7 @@ const gameApp = {
     lives: 3,
     interval: undefined,
     coolDown: 100,
-    medusas: [],
+    octopuses: [],
     musicLive: new Audio('./sound/dead.mp3'),
     musicIntro: new Audio('./sound/intro.mp3'),
     musicGameOver: new Audio('./sound/gameover.mp3'),
@@ -49,7 +49,7 @@ const gameApp = {
             this.clearAll()
             this.drawAll()
             this.heroe.moveHeroe()
-            this.medusas.forEach(medusas => medusas.move())
+            this.octopuses.forEach(octopus => octopus.move())
             this.enemies.forEach(enemy => enemy.move())
             this.heroe.setEventListeners()
             if (this.heroe.canMoveUp) { this.heroe.position.y -= 10 }
@@ -63,9 +63,9 @@ const gameApp = {
             this.collisionBulletsWithEnemies()
             this.drawScore()
             this.drawlives()
-            this.generateMedusas()
-            this.collisionWithMedusas()
-            this.collisionBulletsWithMedusa()
+            this.generateOctopuses()
+            this.collisionWithOctopuses()
+            this.collisionBulletsWithOctopuses()
             if (this.lives === 0) { this.gameOver() }
         }, 10)
     },
@@ -77,9 +77,9 @@ const gameApp = {
             this.enemies.push(new Enemy(this.ctx, this.canvasSize))
         }
     },
-    generateMedusas() {
+    generateOctopuses() {
         if (this.framesCounter % 300 === 0) {
-            this.medusas.push(new Medusa(this.ctx, this.canvasSize))
+            this.octopuses.push(new Octopus(this.ctx, this.canvasSize))
         }
     },
     clearEnemies() {
@@ -95,7 +95,7 @@ const gameApp = {
         this.background.drawAllBackground()
         this.heroe.drawHeroe()
         this.enemies.forEach(enemy => enemy.draw())
-        this.medusas.forEach(medusa => medusa.draw())
+        this.octopuses.forEach(octopus => octopus.draw())
     },
     collisionWithEnemies() {
         this.enemies.forEach(enemy => {
@@ -111,16 +111,16 @@ const gameApp = {
             }
         })
     },
-    collisionWithMedusas() {
-        this.medusas.forEach(medusa => {
-            if (this.heroe.position.x < medusa.position.x + medusa.size.w &&
-                this.heroe.position.x + this.heroe.size.w > medusa.position.x &&
-                this.heroe.position.y < medusa.position.y + medusa.size.h &&
-                this.heroe.size.h + this.heroe.position.y > medusa.position.y) {
+    collisionWithOctopuses() {
+        this.octopuses.forEach(octopus => {
+            if (this.heroe.position.x < octopus.position.x + octopus.size.w &&
+                this.heroe.position.x + this.heroe.size.w > octopus.position.x &&
+                this.heroe.position.y < octopus.position.y + octopus.size.h &&
+                this.heroe.size.h + this.heroe.position.y > octopus.position.y) {
                 this.lives--
                 this.musicLive.play()
-                let medusaCollision = this.medusas.indexOf(medusa)
-                this.medusas.splice(medusaCollision, 1)
+                let octopusCollision = this.octopuses.indexOf(octopus)
+                this.octopuses.splice(octopusCollision, 1)
             }
         })
     },
@@ -159,13 +159,13 @@ const gameApp = {
             })
         })
     },
-    collisionBulletsWithMedusa() {
+    collisionBulletsWithOctopuses() {
         this.heroe.bullets.forEach(bullet => {
-            this.medusas.forEach(medusa => {
-                if (bullet.bulletsPos.x < medusa.position.x + medusa.size.w &&
-                    bullet.bulletsPos.x + bullet.size.w > medusa.position.x &&
-                    bullet.bulletsPos.y < medusa.position.y + medusa.size.h &&
-                    bullet.size.h + bullet.bulletsPos.y > medusa.position.y) {
+            this.octopuses.forEach(octopus => {
+                if (bullet.bulletsPos.x < octopus.position.x + octopus.size.w &&
+                    bullet.bulletsPos.x + bullet.size.w > octopus.position.x &&
+                    bullet.bulletsPos.y < octopus.position.y + octopus.size.h &&
+                    bullet.size.h + bullet.bulletsPos.y > octopus.position.y) {
                     let bulletCollision = this.heroe.bullets.indexOf(bullet)
                     this.heroe.bullets.splice(bulletCollision, 1)
 

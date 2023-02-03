@@ -25,9 +25,6 @@ class Bullet {
 
     draw() {
         this.ctx.drawImage(this.bulletsInstance, this.bulletsPos.x, this.bulletsPos.y, this.size.w, this.size.h)
-
-        // this.ctx.fillStyle = 'red'
-        // this.ctx.fillRect(this.bulletsPos.x, this.bulletsPos.y, this.size.w, this.size.h)
         this.move()
     }
     move() {

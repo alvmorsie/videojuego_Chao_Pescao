@@ -1,4 +1,4 @@
-class Medusa {
+class Octopus {
     constructor(ctx, canvasSize) {
         this.ctx = ctx;
         this.canvasSize = canvasSize;
@@ -10,12 +10,12 @@ class Medusa {
             w: 90,
             h: 90,
         }
-        this.medusaInstance = new Image()
-        this.medusaInstance.src = './img/pulpo.png'
+        this.octopusInstance = new Image()
+        this.octopusInstance.src = './img/pulpo.png'
         this.Vel = { x: 2.5, y: 0 }
     }
     draw() {
-        this.ctx.drawImage(this.medusaInstance, this.position.x, this.position.y, this.size.w, this.size.h)
+        this.ctx.drawImage(this.octopusInstance, this.position.x, this.position.y, this.size.w, this.size.h)
     }
     move() {
         this.position.x -= this.Vel.x
